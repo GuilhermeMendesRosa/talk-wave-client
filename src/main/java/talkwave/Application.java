@@ -19,15 +19,15 @@ public class Application {
 
             new Thread(new ReceiveMessageRunnable(client)).start();
 
-            String message;
+            String command;
             do {
-                message = SystemScanner.get(null);
-                if (StringValidator.isNotBlank(message)) {
-                    client.sendMessage(message);
+                command = SystemScanner.get();
+                if (StringValidator.validateCommand(command)) {
+                    client.sendMessage(command);
                 } else {
                     System.out.println("Comando inválido.");
                 }
-            } while (!message.equals("/sair"));
+            } while (!command.equals("/sair"));
 
             client.closeConnection();
         } catch (IOException e) {
