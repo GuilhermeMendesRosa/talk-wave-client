@@ -1,9 +1,6 @@
 package talkwave;
 
-import talkwave.model.Client;
-import talkwave.model.ReceiveMessageRunnable;
-import talkwave.model.StringValidator;
-import talkwave.model.SystemScanner;
+import talkwave.model.*;
 
 import java.io.IOException;
 
@@ -19,15 +16,7 @@ public class Application {
 
             new Thread(new ReceiveMessageRunnable(client)).start();
 
-            String command;
-            do {
-                command = SystemScanner.get();
-                if (StringValidator.validateCommand(command)) {
-                    client.sendMessage(command);
-                } else {
-                    System.out.println("Comando inválido.");
-                }
-            } while (!command.equals("/sair"));
+            new MessageSender(client).start();
 
             client.closeConnection();
         } catch (IOException e) {
