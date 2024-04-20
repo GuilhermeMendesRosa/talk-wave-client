@@ -16,7 +16,7 @@ public class Application {
 
             new Thread(new ReceiveMessageRunnable(client)).start();
 
-            new MessageSender(client).start();
+            new CommandListener(client).start();
 
             client.closeConnection();
         } catch (IOException e) {

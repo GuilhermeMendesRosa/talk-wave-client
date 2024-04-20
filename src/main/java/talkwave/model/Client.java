@@ -1,9 +1,6 @@
 package talkwave.model;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.PrintStream;
+import java.io.*;
 import java.net.Socket;
 
 public class Client {
@@ -27,6 +24,28 @@ public class Client {
 
     public void sendMessage(String message) {
         this.printStream.println(userId + ": " + message);
+    }
+
+    public void sendFile(String commandLine) {
+        try {
+            String filePath = commandLine.replace("/" + Command.SEND_FILE.getCommand(), "");
+
+            File file = new File(filePath);
+            byte[] bytes = new byte[(int) file.length()];
+
+            BufferedInputStream bufferedInputStream = new BufferedInputStream(
+                    new FileInputStream(file)
+            );
+
+            int readContent;
+            while ((readContent = bufferedInputStream.read(bytes)) != -1) {
+                this.printStream.write(bytes, 0, readContent);
+            }
+
+            this.printStream.flush();
+        } catch (IOException e) {
+            System.out.println("Erro ao enviar arquivo");
+        }
     }
 
     public void receiveMessage() throws IOException {
