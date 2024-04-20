@@ -58,7 +58,7 @@ public class Client {
 
             if (!this.isValidUser(messageOwner)) continue;
 
-            if (serverMessage.contains("/sair")) {
+            if (serverMessage.contains(Command.EXIT.getCommandWithPrefix())) {
                 System.out.println(messageOwner + " se desconectou!");
                 continue;
             }
