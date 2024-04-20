@@ -24,14 +24,14 @@ public class CommandListener {
             }
 
             client.sendMessage(commandLine);
-        } while (!commandLine.equals("/sair"));
+        } while (!commandLine.equals(Command.EXIT.getCommandWithPrefix()));
     }
 
     private void onInvalidCommand() {
         System.out.println("Comando inválido. Tente novamente.");
         System.out.println("Comandos disponíveis: ");
         for (Command command : Command.values()) {
-            System.out.println(command.getCommand());
+            System.out.println(command.getCommandWithPrefix());
         }
     }
 }

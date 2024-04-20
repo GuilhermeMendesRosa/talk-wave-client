@@ -28,7 +28,7 @@ public class Client {
 
     public void sendFile(String commandLine) {
         try {
-            String filePath = commandLine.replace("/" + Command.SEND_FILE.getCommand(), "");
+            String filePath = commandLine.replace(Command.SEND_FILE.getCommandWithPrefix(), "").trim();
 
             File file = new File(filePath);
             byte[] bytes = new byte[(int) file.length()];

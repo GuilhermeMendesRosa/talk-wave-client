@@ -11,12 +11,18 @@ public enum Command {
 
     private final String command;
 
+    public static final String PREFIX = "/";
+
     Command(String command) {
         this.command = command;
     }
 
     public String getCommand() {
         return command;
+    }
+
+    public String getCommandWithPrefix() {
+        return PREFIX + command;
     }
 
     public static Command getCommand(String command) {
