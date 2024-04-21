@@ -1,5 +1,7 @@
 package talkwave.model;
 
+import com.google.gson.Gson;
+
 import java.io.*;
 import java.net.Socket;
 
@@ -22,8 +24,12 @@ public class Client {
         this.printStream.println(userId);
     }
 
-    public void sendMessage(String message) {
-        this.printStream.println(userId + ": " + message);
+    public void sendMessage(String messageContent) {
+        Message message = new Message(userId, "joao", messageContent);
+
+        String json = new Gson().toJson(message);
+
+        this.printStream.println(json);
     }
 
     public void sendFile(String commandLine) {
