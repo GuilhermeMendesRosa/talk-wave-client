@@ -7,7 +7,7 @@ import java.io.IOException;
 public class Application {
 
     private static final String host = "localhost";
-    private static final Integer port = 12345;
+    private static final Integer port = 8080;
 
     public static void main(String[] args) {
         try {

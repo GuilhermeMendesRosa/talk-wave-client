@@ -27,7 +27,7 @@ public enum Command {
 
     public static Command getCommand(String command) {
         return Arrays.stream(Command.values())
-                .filter(c -> c.getCommand().equals(command))
+                .filter(c -> command.startsWith(c.getCommandWithPrefix()))
                 .findFirst()
                 .orElse(null);
     }
