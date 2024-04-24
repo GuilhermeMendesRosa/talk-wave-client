@@ -4,6 +4,8 @@ import com.google.gson.Gson;
 
 import java.io.*;
 import java.net.Socket;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Client {
 
@@ -25,10 +27,23 @@ public class Client {
     }
 
     public void sendMessage(String messageContent) {
-        Message message = new Message(userId, "joao", messageContent);
+        String[] parts = messageContent.split(" ", 2);
+        Message message = new Message(userId, parts[0].trim(), parts[1].trim(), Command.SEND_MESSAGE);
 
         String json = new Gson().toJson(message);
+        this.printStream.println(json);
+    }
 
+    public void sendListUsersMessage() {
+        Message message = new Message(userId, userId, Command.USERS);
+
+        String json = new Gson().toJson(message);
+        this.printStream.println(json);
+    }
+
+    public void sendCloseConnectionMessage() {
+        Message message = new Message(userId, Command.EXIT);
+        String json = new Gson().toJson(message);
         this.printStream.println(json);
     }
 
@@ -60,16 +75,22 @@ public class Client {
 
         String serverMessage;
         while ((serverMessage = reader.readLine()) != null) {
-            String messageOwner = serverMessage.split(":")[0];
+            Message message = new Gson().fromJson(serverMessage, Message.class);
 
-            if (!this.isValidUser(messageOwner)) continue;
-
-            if (serverMessage.contains(Command.EXIT.getCommandWithPrefix())) {
-                System.out.println(messageOwner + " se desconectou!");
-                continue;
+            switch (message.getCommand()) {
+                case SEND_MESSAGE -> {
+                    System.out.println(message.getSender() + ": " + message.getContent());
+                }
+                case USERS -> {
+                    List<String> list = new Gson().fromJson(message.getContent(), ArrayList.class);
+                    System.out.println("------------------Usuários------------------");
+                    list.forEach(System.out::println);
+                    System.out.println("--------------------------------------------");
+                }
+                case EXIT -> {
+                    System.out.println(message.getSender() + " se desconectou!");
+                }
             }
-
-            System.out.println(serverMessage);
         }
     }
 
@@ -78,6 +99,7 @@ public class Client {
     }
 
     public void closeConnection() throws IOException {
+        this.sendCloseConnectionMessage();
         this.printStream.close();
         this.socket.close();
     }
