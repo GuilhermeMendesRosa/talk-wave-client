@@ -28,10 +28,10 @@ public class CommandListener {
     }
 
     private void onInvalidCommand() {
-        System.out.println("Comando inválido. Tente novamente.");
-        System.out.println("Comandos disponíveis: ");
+        SystemPrinter.println("Comando inválido. Tente novamente.");
+        SystemPrinter.println("Comandos disponíveis: ");
         for (Command command : Command.values()) {
-            System.out.println(command.getCommandWithPrefix());
+            SystemPrinter.println(command.getCommandWithPrefix());
         }
     }
 }

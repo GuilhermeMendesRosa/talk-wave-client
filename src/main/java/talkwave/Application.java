@@ -20,7 +20,7 @@ public class Application {
 
             client.closeConnection();
         } catch (IOException e) {
-            System.out.println("Erro ao conectar ao servidor");
+            SystemPrinter.println("Erro ao conectar ao servidor");
         }
     }
 
@@ -30,7 +30,7 @@ public class Application {
         do {
             isValidUsername = StringValidator.isNotBlank(username);
             if (!isValidUsername) {
-                System.out.println("Usuário inválido, tente novamente.");
+                SystemPrinter.println("Usuário inválido, tente novamente.");
                 username = SystemScanner.get("Informe o nome do usuário: ");
             }
         } while (!isValidUsername);

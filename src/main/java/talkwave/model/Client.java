@@ -50,7 +50,7 @@ public class Client {
 
             this.printStream.flush();
         } catch (IOException e) {
-            System.out.println("Erro ao enviar arquivo");
+            SystemPrinter.println("Erro ao enviar arquivo");
         }
     }
 
@@ -65,11 +65,11 @@ public class Client {
             if (!this.isValidUser(messageOwner)) continue;
 
             if (serverMessage.contains(Command.EXIT.getCommandWithPrefix())) {
-                System.out.println(messageOwner + " se desconectou!");
+                SystemPrinter.println(messageOwner + " se desconectou!");
                 continue;
             }
 
-            System.out.println(serverMessage);
+            SystemPrinter.println(serverMessage);
         }
     }
 
