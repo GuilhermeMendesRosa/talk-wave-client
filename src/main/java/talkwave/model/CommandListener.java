@@ -24,7 +24,6 @@ public class CommandListener {
                     client.sendMessage(message);
                 }
                 case USERS -> {
-                    String messageContent = commandLine.replace(command.getCommandWithPrefix() + " ", "");
                     client.sendListUsersMessage();
                 }
                 case SEND_FILE -> {
