@@ -11,6 +11,10 @@ public class Application {
 
     public static void main(String[] args) {
         try {
+            MessageBuilder.println(ConsoleColors.BLUE, """
+                    ----------🌊Bem vindo ao TalkWave🌊----------
+                    (As mensagens trocadas podem ser auditadas!)
+                    """);
             String username = getUserId();
             Client client = new Client(username, host, port);
 
@@ -20,7 +24,7 @@ public class Application {
 
             client.closeConnection();
         } catch (IOException e) {
-            System.out.println("Erro ao conectar ao servidor");
+            MessageBuilder.println(ConsoleColors.RED,"Erro ao conectar ao servidor");
         }
     }
 
@@ -30,7 +34,7 @@ public class Application {
         do {
             isValidUsername = StringValidator.isNotBlank(username);
             if (!isValidUsername) {
-                System.out.println("Usuário inválido, tente novamente.");
+                MessageBuilder.println(ConsoleColors.RED,"Usuário inválido, tente novamente.");
                 username = SystemScanner.get("Informe o nome do usuário: ");
             }
         } while (!isValidUsername);

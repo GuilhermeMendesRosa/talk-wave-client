@@ -4,8 +4,8 @@ import java.util.Arrays;
 
 public enum Command {
 
-    SEND_FILE("file"),
-    SEND_MESSAGE("message"),
+    SEND_FILE("send file"),
+    SEND_MESSAGE("send message"),
     USERS("users"),
     EXIT("sair"),
     BANNED("banned");

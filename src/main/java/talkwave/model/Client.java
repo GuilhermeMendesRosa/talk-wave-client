@@ -48,7 +48,7 @@ public class Client {
             String json = new Gson().toJson(message);
             this.printStream.println(json);
         } catch (Exception e) {
-            System.out.println("Não foi possível enviar a mensagem");
+            MessageBuilder.println(ConsoleColors.RED,"Não foi possível enviar a mensagem");
         }
     }
 
@@ -89,7 +89,7 @@ public class Client {
 
             this.printStream.flush();
         } catch (IOException e) {
-            System.out.println("Erro ao enviar arquivo");
+            MessageBuilder.println(ConsoleColors.RED, "Erro ao enviar arquivo");
         }
     }
 
@@ -103,19 +103,19 @@ public class Client {
 
             switch (message.getCommand()) {
                 case SEND_MESSAGE -> {
-                    System.out.println(message.getSender() + ": " + message.getContent());
+                    MessageBuilder.println(ConsoleColors.BLUE,message.getSender() + ": " + message.getContent());
                 }
                 case USERS -> {
                     List<String> list = new Gson().fromJson(message.getContent(), ArrayList.class);
-                    System.out.println("------------------Usuários------------------");
-                    list.forEach(System.out::println);
-                    System.out.println("--------------------------------------------");
+                    MessageBuilder.println(ConsoleColors.BLUE,"------------------Usuários------------------");
+                    list.forEach(s -> MessageBuilder.println(ConsoleColors.BLUE, s));
+                    MessageBuilder.println(ConsoleColors.BLUE,"--------------------------------------------");
                 }
                 case EXIT -> {
-                    System.out.println(message.getSender() + " se desconectou!");
+                    MessageBuilder.println(ConsoleColors.RED,message.getSender() + " se desconectou!");
                 }
                 case BANNED -> {
-                    System.out.println("Você foi banido!");
+                    MessageBuilder.println(ConsoleColors.RED,"Você foi banido!");
                     this.closeConnection();
                 }
             }
