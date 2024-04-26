@@ -101,7 +101,7 @@ public class Client {
         while ((serverMessage = reader.readLine()) != null) {
             Message message = new Gson().fromJson(serverMessage, Message.class);
 
-            switch (message.getCommand()) {
+            switch (message.getCommandType()) {
                 case SEND_MESSAGE -> {
                     MessagePrinter.println(ConsoleColors.BLUE,message.getSender() + ": " + message.getContent());
                 }
