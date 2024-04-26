@@ -28,7 +28,10 @@ public class Client {
 
     public void sendMessage(String messageContent) {
         String[] parts = messageContent.split(" ", 2);
-        Message message = new Message(userId, parts[0].trim(), parts[1].trim(), Command.SEND_MESSAGE);
+
+        String recipient = parts[0].trim();
+        String content = parts[1].trim();
+        Message message = new Message(userId, recipient, content, Command.SEND_MESSAGE);
 
         String json = new Gson().toJson(message);
         this.printStream.println(json);
