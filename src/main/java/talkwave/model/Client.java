@@ -5,6 +5,8 @@ import com.google.gson.Gson;
 import java.io.*;
 import java.net.Socket;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 public class Client {
@@ -27,18 +29,19 @@ public class Client {
     }
 
     public void sendMessage(String messageContent) {
-        String[] parts = messageContent.split(" ", 2);
+        String[] parts = messageContent.split("\\s*to:\\s*|\\s+", 3);
 
-        String recipient = parts[0].trim();
-        String content = parts[1].trim();
-        Message message = new Message(userId, recipient, content, Command.SEND_MESSAGE);
+        String recipientsString = parts[1].trim();
+        List<String> recipients = Arrays.asList(recipientsString.split(","));
+        String content = parts[2].trim();
+        Message message = new Message(userId, recipients, content, Command.SEND_MESSAGE);
 
         String json = new Gson().toJson(message);
         this.printStream.println(json);
     }
 
     public void sendListUsersMessage() {
-        Message message = new Message(userId, userId, Command.USERS);
+        Message message = new Message(userId, Collections.singletonList(userId), Command.USERS);
 
         String json = new Gson().toJson(message);
         this.printStream.println(json);
