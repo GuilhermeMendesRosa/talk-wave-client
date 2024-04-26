@@ -29,13 +29,31 @@ public class Client {
     }
 
     public void sendMessage(String messageContent) {
-        String[] parts = messageContent.split("\\s*to:\\s*|\\s+", 3);
+        boolean hasRecipients = messageContent.contains("to:");
+        if (hasRecipients) {
+            sendMessageWUsers(messageContent);
+        } else {
+            sendMessageWNoUsers(messageContent);
+        }
+    }
 
-        String recipientsString = parts[1].trim();
-        List<String> recipients = Arrays.asList(recipientsString.split(","));
-        String content = parts[2].trim();
-        Message message = new Message(userId, recipients, content, Command.SEND_MESSAGE);
+    private void sendMessageWUsers(String messageContent) {
+        try {
+            String[] parts = messageContent.split("\\s*to:\\s*|\\s+", 3);
 
+            List<String> recipients = Arrays.asList(parts[1].trim().split(","));
+            String content = parts[2].trim();
+            Message message = new Message(userId, recipients, content, Command.SEND_MESSAGE);
+
+            String json = new Gson().toJson(message);
+            this.printStream.println(json);
+        } catch (Exception e) {
+            System.out.println("Não foi possível enviar a mensagem");
+        }
+    }
+
+    private void sendMessageWNoUsers(String messageContent) {
+        Message message = new Message(userId, null, messageContent, Command.SEND_MESSAGE);
         String json = new Gson().toJson(message);
         this.printStream.println(json);
     }
