@@ -37,10 +37,10 @@ public class CommandListener {
     }
 
     private void onInvalidCommand() {
-        System.out.println("Comando inválido. Tente novamente.");
-        System.out.println("Comandos disponíveis: ");
+        MessagePrinter.println(ConsoleColors.RED,"Comando inválido. Tente novamente.");
+        MessagePrinter.println(ConsoleColors.BLUE,"Comandos disponíveis: ");
         for (Command command : Command.values()) {
-            System.out.println(command.getCommandWithPrefix());
+            MessagePrinter.println(ConsoleColors.BLUE,command.getCommandWithPrefix());
         }
     }
 }

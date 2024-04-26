@@ -5,6 +5,8 @@ import com.google.gson.Gson;
 import java.io.*;
 import java.net.Socket;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 public class Client {
@@ -27,18 +29,37 @@ public class Client {
     }
 
     public void sendMessage(String messageContent) {
-        String[] parts = messageContent.split(" ", 2);
+        boolean hasRecipients = messageContent.contains("to:");
+        if (hasRecipients) {
+            sendMessageWUsers(messageContent);
+        } else {
+            sendMessageWNoUsers(messageContent);
+        }
+    }
 
-        String recipient = parts[0].trim();
-        String content = parts[1].trim();
-        Message message = new Message(userId, recipient, content, Command.SEND_MESSAGE);
+    private void sendMessageWUsers(String messageContent) {
+        try {
+            String[] parts = messageContent.split("\\s*to:\\s*|\\s+", 3);
 
+            List<String> recipients = Arrays.asList(parts[1].trim().split(","));
+            String content = parts[2].trim();
+            Message message = new Message(userId, recipients, content, Command.SEND_MESSAGE);
+
+            String json = new Gson().toJson(message);
+            this.printStream.println(json);
+        } catch (Exception e) {
+            MessagePrinter.println(ConsoleColors.RED,"Não foi possível enviar a mensagem");
+        }
+    }
+
+    private void sendMessageWNoUsers(String messageContent) {
+        Message message = new Message(userId, null, messageContent, Command.SEND_MESSAGE);
         String json = new Gson().toJson(message);
         this.printStream.println(json);
     }
 
     public void sendListUsersMessage() {
-        Message message = new Message(userId, userId, Command.USERS);
+        Message message = new Message(userId, Collections.singletonList(userId), Command.USERS);
 
         String json = new Gson().toJson(message);
         this.printStream.println(json);
@@ -68,7 +89,7 @@ public class Client {
 
             this.printStream.flush();
         } catch (IOException e) {
-            System.out.println("Erro ao enviar arquivo");
+            MessagePrinter.println(ConsoleColors.RED, "Erro ao enviar arquivo");
         }
     }
 
@@ -82,16 +103,20 @@ public class Client {
 
             switch (message.getCommand()) {
                 case SEND_MESSAGE -> {
-                    System.out.println(message.getSender() + ": " + message.getContent());
+                    MessagePrinter.println(ConsoleColors.BLUE,message.getSender() + ": " + message.getContent());
                 }
                 case USERS -> {
                     List<String> list = new Gson().fromJson(message.getContent(), ArrayList.class);
-                    System.out.println("------------------Usuários------------------");
-                    list.forEach(System.out::println);
-                    System.out.println("--------------------------------------------");
+                    MessagePrinter.println(ConsoleColors.BLUE,"------------------Usuários------------------");
+                    list.forEach(s -> MessagePrinter.println(ConsoleColors.BLUE, s));
+                    MessagePrinter.println(ConsoleColors.BLUE,"--------------------------------------------");
                 }
                 case EXIT -> {
-                    System.out.println(message.getSender() + " se desconectou!");
+                    MessagePrinter.println(ConsoleColors.RED,message.getSender() + " se desconectou!");
+                }
+                case BANNED -> {
+                    MessagePrinter.println(ConsoleColors.RED,"Você foi banido!");
+                    this.closeConnection();
                 }
             }
         }
