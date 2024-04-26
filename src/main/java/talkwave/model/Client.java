@@ -43,7 +43,7 @@ public class Client {
 
             List<String> recipients = Arrays.asList(parts[1].trim().split(","));
             String content = parts[2].trim();
-            Message message = new Message(userId, recipients, content, Command.SEND_MESSAGE);
+            Message message = new Message(userId, recipients, content, CommandType.SEND_MESSAGE);
 
             String json = new Gson().toJson(message);
             this.printStream.println(json);
@@ -53,27 +53,27 @@ public class Client {
     }
 
     private void sendMessageWNoUsers(String messageContent) {
-        Message message = new Message(userId, null, messageContent, Command.SEND_MESSAGE);
+        Message message = new Message(userId, null, messageContent, CommandType.SEND_MESSAGE);
         String json = new Gson().toJson(message);
         this.printStream.println(json);
     }
 
     public void sendListUsersMessage() {
-        Message message = new Message(userId, Collections.singletonList(userId), Command.USERS);
+        Message message = new Message(userId, Collections.singletonList(userId), CommandType.USERS);
 
         String json = new Gson().toJson(message);
         this.printStream.println(json);
     }
 
     public void sendCloseConnectionMessage() {
-        Message message = new Message(userId, Command.EXIT);
+        Message message = new Message(userId, CommandType.EXIT);
         String json = new Gson().toJson(message);
         this.printStream.println(json);
     }
 
     public void sendFile(String commandLine) {
         try {
-            String filePath = commandLine.replace(Command.SEND_FILE.getCommandWithPrefix(), "").trim();
+            String filePath = commandLine.replace(CommandType.SEND_FILE.getCommandWithPrefix(), "").trim();
 
             File file = new File(filePath);
             byte[] bytes = new byte[(int) file.length()];

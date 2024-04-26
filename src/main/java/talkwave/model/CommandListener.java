@@ -11,16 +11,16 @@ public class CommandListener {
     public void start() {
         while (true) {
             String commandLine = SystemScanner.get();
-            Command command = Command.getCommand(commandLine);
+            CommandType commandType = CommandType.getCommand(commandLine);
 
-            if (command == null) {
+            if (commandType == null) {
                 onInvalidCommand();
                 continue;
             }
 
-            switch (command) {
+            switch (commandType) {
                 case SEND_MESSAGE -> {
-                    String message = commandLine.replace(command.getCommandWithPrefix() + " ", "");
+                    String message = commandLine.replace(commandType.getCommandWithPrefix() + " ", "");
                     client.sendMessage(message);
                 }
                 case USERS -> {
@@ -39,7 +39,7 @@ public class CommandListener {
     private void onInvalidCommand() {
         MessagePrinter.println(ConsoleColors.RED,"Comando inválido. Tente novamente.");
         MessagePrinter.println(ConsoleColors.BLUE,"Comandos disponíveis: ");
-        for (Command command : Command.values()) {
+        for (CommandType command : CommandType.values()) {
             MessagePrinter.println(ConsoleColors.BLUE,command.getCommandWithPrefix());
         }
     }

@@ -7,19 +7,20 @@ public class Message {
     private String sender;
     private List<String> recipients;
     private String content;
-    private Command command;
+    private CommandType command;
 
-    public Message(String sender, Command command) {
+    public Message(String sender, CommandType command) {
         this.sender = sender;
         this.command = command;
     }
 
-    public Message(String sender, List<String> recipients, Command command) {
+    public Message(String sender, List<String> recipients, CommandType command) {
         this.sender = sender;
         this.recipients = recipients;
         this.command = command;
     }
-    public Message(String sender, List<String> recipients, String content, Command command) {
+
+    public Message(String sender, List<String> recipients, String content, CommandType command) {
         this.sender = sender;
         this.recipients = recipients;
         this.content = content;
@@ -50,11 +51,11 @@ public class Message {
         this.content = content;
     }
 
-    public Command getCommand() {
+    public CommandType getCommand() {
         return command;
     }
 
-    public void setCommand(Command command) {
+    public void setCommand(CommandType command) {
         this.command = command;
     }
 }

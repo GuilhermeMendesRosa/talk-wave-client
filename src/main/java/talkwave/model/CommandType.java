@@ -2,7 +2,7 @@ package talkwave.model;
 
 import java.util.Arrays;
 
-public enum Command {
+public enum CommandType {
 
     SEND_FILE("send file"),
     SEND_MESSAGE("send message"),
@@ -14,7 +14,7 @@ public enum Command {
 
     public static final String PREFIX = "/";
 
-    Command(String command) {
+    CommandType(String command) {
         this.command = command;
     }
 
@@ -26,8 +26,8 @@ public enum Command {
         return PREFIX + command;
     }
 
-    public static Command getCommand(String command) {
-        return Arrays.stream(Command.values())
+    public static CommandType getCommand(String command) {
+        return Arrays.stream(CommandType.values())
                 .filter(c -> command.startsWith(c.getCommandWithPrefix()))
                 .findFirst()
                 .orElse(null);

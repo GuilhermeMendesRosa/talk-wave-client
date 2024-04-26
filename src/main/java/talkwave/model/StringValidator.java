@@ -1,7 +1,5 @@
 package talkwave.model;
 
-import java.util.List;
-
 public class StringValidator {
 
     public static boolean isNotBlank(String string) {
@@ -15,7 +13,7 @@ public class StringValidator {
         try {
             if (!isNotBlank(command)) return false;
 
-            Command.valueOf(command);
+            CommandType.valueOf(command);
             return true;
         } catch (Exception exception) {
             return false;
