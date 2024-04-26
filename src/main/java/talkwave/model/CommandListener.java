@@ -23,12 +23,8 @@ public class CommandListener {
                     String message = commandLine.replace(commandType.getCommandWithPrefix() + " ", "");
                     client.sendMessage(message);
                 }
-                case USERS -> {
-                    client.sendListUsersMessage();
-                }
-                case SEND_FILE -> {
-                    client.sendFile(commandLine);
-                }
+                case USERS -> client.sendListUsersMessage();
+                case SEND_FILE -> client.sendFile(commandLine);
                 case EXIT -> {
                     return;
                 }
