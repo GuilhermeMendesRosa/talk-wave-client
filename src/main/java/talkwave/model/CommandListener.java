@@ -9,22 +9,31 @@ public class CommandListener {
     }
 
     public void start() {
-        String commandLine;
-        do {
-            commandLine = SystemScanner.get();
+        while (true) {
+            String commandLine = SystemScanner.get();
             Command command = Command.getCommand(commandLine);
+
             if (command == null) {
                 onInvalidCommand();
                 continue;
             }
 
-            if (command.isSendFile()) {
-                client.sendFile(commandLine);
-                continue;
+            switch (command) {
+                case SEND_MESSAGE -> {
+                    String message = commandLine.replace(command.getCommandWithPrefix() + " ", "");
+                    client.sendMessage(message);
+                }
+                case USERS -> {
+                    client.sendListUsersMessage();
+                }
+                case SEND_FILE -> {
+                    client.sendFile(commandLine);
+                }
+                case EXIT -> {
+                    return;
+                }
             }
-
-            client.sendMessage(commandLine);
-        } while (!commandLine.equals(Command.EXIT.getCommandWithPrefix()));
+        }
     }
 
     private void onInvalidCommand() {
