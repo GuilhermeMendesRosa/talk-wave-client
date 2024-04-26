@@ -1,5 +1,7 @@
 package talkwave;
 
+import talkwave.integration.Client;
+import talkwave.integration.ReceiveMessageRunnable;
 import talkwave.model.*;
 
 import java.io.IOException;

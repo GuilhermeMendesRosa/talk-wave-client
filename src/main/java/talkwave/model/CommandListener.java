@@ -1,5 +1,7 @@
 package talkwave.model;
 
+import talkwave.integration.Client;
+
 public class CommandListener {
 
     private final Client client;

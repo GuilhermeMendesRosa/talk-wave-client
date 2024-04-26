@@ -1,4 +1,6 @@
-package talkwave.model;
+package talkwave.integration;
+
+import talkwave.model.CommandType;
 
 import java.util.List;
 

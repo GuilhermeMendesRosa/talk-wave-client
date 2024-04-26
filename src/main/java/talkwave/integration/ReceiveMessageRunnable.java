@@ -1,4 +1,7 @@
-package talkwave.model;
+package talkwave.integration;
+
+import talkwave.model.ConsoleColors;
+import talkwave.model.MessagePrinter;
 
 import java.io.IOException;
 

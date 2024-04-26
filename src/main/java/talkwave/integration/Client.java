@@ -1,6 +1,9 @@
-package talkwave.model;
+package talkwave.integration;
 
 import com.google.gson.Gson;
+import talkwave.model.CommandType;
+import talkwave.model.ConsoleColors;
+import talkwave.model.MessagePrinter;
 
 import java.io.*;
 import java.net.Socket;
