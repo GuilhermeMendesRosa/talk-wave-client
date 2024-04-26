@@ -15,7 +15,7 @@ public class ReceiveMessageRunnable implements Runnable {
 		try {
 			client.receiveMessage();
 		} catch (IOException e) {
-			MessageBuilder.println(ConsoleColors.RED,"Conexão fechada!");
+			MessagePrinter.println(ConsoleColors.RED,"Conexão fechada!");
 		}
 	}
 }

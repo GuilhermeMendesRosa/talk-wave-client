@@ -6,7 +6,7 @@ public class SystemScanner {
 
     public static String get(String label) {
         if (label != null) {
-            MessageBuilder.println(ConsoleColors.BLUE,label);
+            MessagePrinter.println(ConsoleColors.BLUE,label);
         }
 
         return get();

@@ -48,7 +48,7 @@ public class Client {
             String json = new Gson().toJson(message);
             this.printStream.println(json);
         } catch (Exception e) {
-            MessageBuilder.println(ConsoleColors.RED,"Não foi possível enviar a mensagem");
+            MessagePrinter.println(ConsoleColors.RED,"Não foi possível enviar a mensagem");
         }
     }
 
@@ -89,7 +89,7 @@ public class Client {
 
             this.printStream.flush();
         } catch (IOException e) {
-            MessageBuilder.println(ConsoleColors.RED, "Erro ao enviar arquivo");
+            MessagePrinter.println(ConsoleColors.RED, "Erro ao enviar arquivo");
         }
     }
 
@@ -103,19 +103,19 @@ public class Client {
 
             switch (message.getCommand()) {
                 case SEND_MESSAGE -> {
-                    MessageBuilder.println(ConsoleColors.BLUE,message.getSender() + ": " + message.getContent());
+                    MessagePrinter.println(ConsoleColors.BLUE,message.getSender() + ": " + message.getContent());
                 }
                 case USERS -> {
                     List<String> list = new Gson().fromJson(message.getContent(), ArrayList.class);
-                    MessageBuilder.println(ConsoleColors.BLUE,"------------------Usuários------------------");
-                    list.forEach(s -> MessageBuilder.println(ConsoleColors.BLUE, s));
-                    MessageBuilder.println(ConsoleColors.BLUE,"--------------------------------------------");
+                    MessagePrinter.println(ConsoleColors.BLUE,"------------------Usuários------------------");
+                    list.forEach(s -> MessagePrinter.println(ConsoleColors.BLUE, s));
+                    MessagePrinter.println(ConsoleColors.BLUE,"--------------------------------------------");
                 }
                 case EXIT -> {
-                    MessageBuilder.println(ConsoleColors.RED,message.getSender() + " se desconectou!");
+                    MessagePrinter.println(ConsoleColors.RED,message.getSender() + " se desconectou!");
                 }
                 case BANNED -> {
-                    MessageBuilder.println(ConsoleColors.RED,"Você foi banido!");
+                    MessagePrinter.println(ConsoleColors.RED,"Você foi banido!");
                     this.closeConnection();
                 }
             }
