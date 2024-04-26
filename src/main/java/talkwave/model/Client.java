@@ -114,6 +114,10 @@ public class Client {
                 case EXIT -> {
                     System.out.println(message.getSender() + " se desconectou!");
                 }
+                case BANNED -> {
+                    System.out.println("Você foi banido!");
+                    this.closeConnection();
+                }
             }
         }
     }
