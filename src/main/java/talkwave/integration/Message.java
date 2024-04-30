@@ -9,24 +9,24 @@ public class Message {
     private String sender;
     private List<String> recipients;
     private String content;
-    private CommandType commandType;
+    private CommandType command;
 
     public Message(String sender, CommandType command) {
         this.sender = sender;
-        this.commandType = command;
+        this.command = command;
     }
 
     public Message(String sender, List<String> recipients, CommandType command) {
         this.sender = sender;
         this.recipients = recipients;
-        this.commandType = command;
+        this.command = command;
     }
 
     public Message(String sender, List<String> recipients, String content, CommandType command) {
         this.sender = sender;
         this.recipients = recipients;
         this.content = content;
-        this.commandType = command;
+        this.command = command;
     }
 
     public String getSender() {
@@ -53,11 +53,11 @@ public class Message {
         this.content = content;
     }
 
-    public CommandType getCommandType() {
-        return commandType;
+    public CommandType getCommand() {
+        return command;
     }
 
-    public void setCommandType(CommandType commandType) {
-        this.commandType = commandType;
+    public void setCommand(CommandType command) {
+        this.command = command;
     }
 }

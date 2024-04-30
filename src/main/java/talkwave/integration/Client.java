@@ -51,8 +51,8 @@ public class Client {
         }
 
         String[] parts = messageContent.split(" ");
-        String recipient = parts[1];
-        String content = parts[2];
+        String recipient = parts[0];
+        String content = parts[1];
         return new Message(userId, Collections.singletonList(recipient), content, CommandType.SEND_MESSAGE);
     }
 
@@ -99,7 +99,7 @@ public class Client {
         while ((serverMessage = reader.readLine()) != null) {
             Message message = new Gson().fromJson(serverMessage, Message.class);
 
-            switch (message.getCommandType()) {
+            switch (message.getCommand()) {
                 case SEND_MESSAGE -> {
                     MessagePrinter.println(ConsoleColors.BLUE,message.getSender() + ": " + message.getContent());
                 }
