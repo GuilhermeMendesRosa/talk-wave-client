@@ -32,33 +32,28 @@ public class Client {
     }
 
     public void sendMessage(String messageContent) {
-        boolean hasRecipients = messageContent.contains("to:");
-        if (hasRecipients) {
-            sendMessageWUsers(messageContent);
-        } else {
-            sendMessageWNoUsers(messageContent);
+        try {
+            Message message = buildTextMessage(messageContent);
+            String json = new Gson().toJson(message);
+            this.printStream.println(json);
+        } catch (Exception e) {
+            MessagePrinter.println(ConsoleColors.RED,"Não foi possível enviar a mensagem. Verifique se o comando está correto.");
         }
     }
 
-    private void sendMessageWUsers(String messageContent) {
-        try {
+    private Message buildTextMessage(String messageContent) {
+        if (messageContent.contains("to:")) {
             String[] parts = messageContent.split("\\s*to:\\s*|\\s+", 3);
 
             List<String> recipients = Arrays.asList(parts[1].trim().split(","));
             String content = parts[2].trim();
-            Message message = new Message(userId, recipients, content, CommandType.SEND_MESSAGE);
-
-            String json = new Gson().toJson(message);
-            this.printStream.println(json);
-        } catch (Exception e) {
-            MessagePrinter.println(ConsoleColors.RED,"Não foi possível enviar a mensagem");
+            return new Message(userId, recipients, content, CommandType.SEND_MESSAGE);
         }
-    }
 
-    private void sendMessageWNoUsers(String messageContent) {
-        Message message = new Message(userId, null, messageContent, CommandType.SEND_MESSAGE);
-        String json = new Gson().toJson(message);
-        this.printStream.println(json);
+        String[] parts = messageContent.split(" ");
+        String recipient = parts[1];
+        String content = parts[2];
+        return new Message(userId, Collections.singletonList(recipient), content, CommandType.SEND_MESSAGE);
     }
 
     public void sendListUsersMessage() {
