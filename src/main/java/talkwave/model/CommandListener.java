@@ -1,7 +1,7 @@
 package talkwave.model;
 
 import talkwave.integration.Client;
-import talkwave.integration.Message;
+import talkwave.integration.dto.MessageDTO;
 import talkwave.integration.MessageBuilder;
 import talkwave.ui.ConsoleColors;
 import talkwave.ui.MessagePrinter;
@@ -19,10 +19,12 @@ public class CommandListener {
         while (true) {
             try {
                 String commandLine = SystemScanner.get();
-                Message message = new MessageBuilder(client.getUserId(), commandLine).build();
+                MessageDTO message = new MessageBuilder(client.getUserId(), commandLine).build();
                 client.send(message);
             } catch (InvalidCommandException ignored) {
                 onInvalidCommand();
+            } catch (Exception e) {
+                MessagePrinter.println(ConsoleColors.RED,"Erro ao processar comando. Tente novamente.");
             }
         }
     }

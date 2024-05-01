@@ -1,8 +1,11 @@
 package talkwave.integration;
 
+import talkwave.integration.dto.FileDTO;
+import talkwave.integration.dto.MessageDTO;
 import talkwave.model.CommandType;
 import talkwave.model.InvalidCommandException;
 
+import java.io.File;
 import java.util.Arrays;
 import java.util.List;
 
@@ -18,22 +21,26 @@ public class MessageBuilder {
         this.commandType = CommandType.getCommand(commandLine);
     }
 
-    public Message build() throws InvalidCommandException {
+    public MessageDTO build() throws InvalidCommandException {
         CommandType commandType = CommandType.getCommand(commandLine);
         if (commandType == null) throw new InvalidCommandException("Comando inválido");
 
         switch (commandType) {
             case USERS, EXIT -> {
-                return new Message(userId, commandType);
+                return new MessageDTO(userId, commandType);
             }
             case SEND_MESSAGE -> {
-                return new Message(userId, getRecipientList(), getArgument(1), CommandType.SEND_MESSAGE);
+                return new MessageDTO(userId, getRecipientList(), getArgument(1), CommandType.SEND_MESSAGE);
             }
             case SEND_FILE -> {
                 String filePath = getArgument(1);
-                String base64File = FileHelper.encodeFileToBase64(filePath);
+
+                File file = new File(filePath);
+                String base64File = FileHelper.encodeFileToBase64(file);
                 if (base64File == null) return null;
-                return new Message(userId, getRecipientList(), base64File, CommandType.SEND_FILE);
+
+                FileDTO fileDTO = new FileDTO(file.getName(), base64File);
+                return new MessageDTO(userId, getRecipientList(), fileDTO, CommandType.SEND_FILE);
             }
             default -> throw new InvalidCommandException("Comando inválido");
         }

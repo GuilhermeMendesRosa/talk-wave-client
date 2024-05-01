@@ -1,6 +1,7 @@
 package talkwave.integration;
 
 import com.google.gson.Gson;
+import talkwave.integration.dto.MessageDTO;
 import talkwave.ui.ConsoleColors;
 import talkwave.ui.MessagePrinter;
 
@@ -29,7 +30,7 @@ public class ReceiveMessageRunnable implements Runnable {
     private void listen(BufferedReader reader) throws IOException {
         String serverMessage;
         while ((serverMessage = reader.readLine()) != null) {
-            Message message = new Gson().fromJson(serverMessage, Message.class);
+            MessageDTO message = new Gson().fromJson(serverMessage, MessageDTO.class);
 
             switch (message.getCommand()) {
                 case SEND_MESSAGE -> {

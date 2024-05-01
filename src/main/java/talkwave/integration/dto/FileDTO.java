@@ -1,4 +1,4 @@
-package talkwave.integration;
+package talkwave.integration.dto;
 
 public class FileDTO {
 

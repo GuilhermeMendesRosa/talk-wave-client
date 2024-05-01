@@ -1,6 +1,7 @@
 package talkwave.integration;
 
 import com.google.gson.Gson;
+import talkwave.integration.dto.MessageDTO;
 import talkwave.model.CommandType;
 
 import java.io.*;
@@ -30,12 +31,12 @@ public class Client {
     }
 
     public void sendCloseConnectionMessage() {
-        Message message = new Message(userId, CommandType.EXIT);
+        MessageDTO message = new MessageDTO(userId, CommandType.EXIT);
         String json = new Gson().toJson(message);
         this.printStream.println(json);
     }
 
-    public void send(Message message) {
+    public void send(MessageDTO message) {
         String json = new Gson().toJson(message);
         this.printStream.println(json);
     }
