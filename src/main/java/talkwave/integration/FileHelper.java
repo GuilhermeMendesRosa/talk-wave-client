@@ -1,7 +1,7 @@
 package talkwave.integration;
 
-import talkwave.model.ConsoleColors;
-import talkwave.model.MessagePrinter;
+import talkwave.ui.ConsoleColors;
+import talkwave.ui.MessagePrinter;
 
 import java.io.*;
 import java.util.Base64;

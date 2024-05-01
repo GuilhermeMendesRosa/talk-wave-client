@@ -1,4 +1,4 @@
-package talkwave.model;
+package talkwave.ui;
 
 import java.util.Scanner;
 

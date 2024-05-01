@@ -3,6 +3,9 @@ package talkwave;
 import talkwave.integration.Client;
 import talkwave.integration.ReceiveMessageRunnable;
 import talkwave.model.*;
+import talkwave.ui.ConsoleColors;
+import talkwave.ui.MessagePrinter;
+import talkwave.ui.SystemScanner;
 
 import java.io.IOException;
 

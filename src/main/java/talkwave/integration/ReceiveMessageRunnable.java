@@ -1,8 +1,8 @@
 package talkwave.integration;
 
 import com.google.gson.Gson;
-import talkwave.model.ConsoleColors;
-import talkwave.model.MessagePrinter;
+import talkwave.ui.ConsoleColors;
+import talkwave.ui.MessagePrinter;
 
 import java.io.BufferedReader;
 import java.io.IOException;

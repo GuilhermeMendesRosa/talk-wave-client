@@ -3,6 +3,9 @@ package talkwave.model;
 import talkwave.integration.Client;
 import talkwave.integration.Message;
 import talkwave.integration.MessageBuilder;
+import talkwave.ui.ConsoleColors;
+import talkwave.ui.MessagePrinter;
+import talkwave.ui.SystemScanner;
 
 public class CommandListener {
 
