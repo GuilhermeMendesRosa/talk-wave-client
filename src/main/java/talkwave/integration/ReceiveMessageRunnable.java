@@ -19,13 +19,13 @@ public class ReceiveMessageRunnable implements Runnable {
 	}
 
 	@Override
-	public void run() {
-		try {
-			listen(client.getBufferedReader());
-		} catch (IOException e) {
-			MessagePrinter.println(ConsoleColors.RED,"Conexão fechada!");
-		}
-	}
+    public void run() {
+        try {
+            listen(client.getBufferedReader());
+        } catch (IOException e) {
+            MessagePrinter.println(ConsoleColors.RED, "Bate-papo desconectado. Tente se conectar novamente.");
+        }
+    }
 
     private void listen(BufferedReader reader) throws IOException {
         String serverMessage;
