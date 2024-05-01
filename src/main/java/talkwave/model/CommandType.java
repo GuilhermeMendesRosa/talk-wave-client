@@ -1,6 +1,7 @@
 package talkwave.model;
 
 import java.util.Arrays;
+import java.util.List;
 
 public enum CommandType {
 
@@ -24,6 +25,10 @@ public enum CommandType {
 
     public String getCommandWithPrefix() {
         return PREFIX + command;
+    }
+
+    public static List<CommandType> listInvokableCommands() {
+        return Arrays.asList(SEND_FILE, SEND_MESSAGE, USERS, EXIT);
     }
 
     public static CommandType getCommand(String command) {
