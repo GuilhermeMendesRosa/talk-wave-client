@@ -21,7 +21,7 @@ public class CommandListener {
                 String commandLine = SystemScanner.get();
                 MessageDTO message = new MessageBuilder(client.getUserId(), commandLine).build();
                 client.send(message);
-            } catch (InvalidCommandException ignored) {
+            } catch (InvalidCommandException invalidCommandException) {
                 onInvalidCommand();
             } catch (Exception e) {
                 MessagePrinter.println(ConsoleColors.RED,"Erro ao processar comando. Tente novamente.");
