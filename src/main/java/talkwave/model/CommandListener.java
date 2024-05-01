@@ -1,6 +1,8 @@
 package talkwave.model;
 
 import talkwave.integration.Client;
+import talkwave.integration.Message;
+import talkwave.integration.MessageBuilder;
 
 public class CommandListener {
 
@@ -12,24 +14,12 @@ public class CommandListener {
 
     public void start() {
         while (true) {
-            String commandLine = SystemScanner.get();
-            CommandType commandType = CommandType.getCommand(commandLine);
-
-            if (commandType == null) {
+            try {
+                String commandLine = SystemScanner.get();
+                Message message = new MessageBuilder(client.getUserId(), commandLine).build();
+                client.send(message);
+            } catch (InvalidCommandException ignored) {
                 onInvalidCommand();
-                continue;
-            }
-
-            switch (commandType) {
-                case SEND_MESSAGE -> {
-                    String message = commandLine.replace(commandType.getCommandWithPrefix() + " ", "");
-                    client.sendMessage(message);
-                }
-                case USERS -> client.sendListUsersMessage();
-                case SEND_FILE -> client.sendFile(commandLine);
-                case EXIT -> {
-                    return;
-                }
             }
         }
     }
