@@ -8,15 +8,4 @@ public class StringValidator {
 
         return true;
     }
-
-    public static boolean validateCommand(String command) {
-        try {
-            if (!isNotBlank(command)) return false;
-
-            CommandType.valueOf(command);
-            return true;
-        } catch (Exception exception) {
-            return false;
-        }
-    }
 }
