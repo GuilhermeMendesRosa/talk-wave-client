@@ -7,6 +7,8 @@ import talkwave.ui.ConsoleColors;
 import talkwave.ui.MessagePrinter;
 import talkwave.ui.EnhancedScanner;
 
+import java.util.List;
+
 public class CommandListener {
 
     private final Client client;
@@ -33,8 +35,15 @@ public class CommandListener {
         MessagePrinter.println(ConsoleColors.RED,"Comando inválido. Tente novamente.");
         MessagePrinter.println(ConsoleColors.BLUE,"Comandos disponíveis: ");
 
-        CommandType.listInvokableCommands().forEach(command ->
-                MessagePrinter.println(ConsoleColors.BLUE, command.getCommandWithPrefix())
+        getCommandExamples().forEach(command -> MessagePrinter.println(ConsoleColors.BLUE, command));
+    }
+
+    private List<String> getCommandExamples() {
+        return List.of(
+            "/send message <usuário> <mensagem>",
+            "/send file <usuário> <caminho do arquivo>",
+            "/users",
+            "/exit"
         );
     }
 }
