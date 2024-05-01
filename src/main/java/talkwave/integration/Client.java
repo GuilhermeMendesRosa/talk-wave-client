@@ -2,12 +2,9 @@ package talkwave.integration;
 
 import com.google.gson.Gson;
 import talkwave.model.CommandType;
-import talkwave.model.ConsoleColors;
-import talkwave.model.MessagePrinter;
 
 import java.io.*;
 import java.net.Socket;
-import java.util.*;
 
 public class Client {
 
@@ -42,33 +39,9 @@ public class Client {
         this.printStream.println(json);
     }
 
-    public void receiveMessage() throws IOException {
+    public BufferedReader getBufferedReader() throws IOException {
         InputStreamReader inputReader = new InputStreamReader(socket.getInputStream());
-        BufferedReader reader = new BufferedReader(inputReader);
-
-        String serverMessage;
-        while ((serverMessage = reader.readLine()) != null) {
-            Message message = new Gson().fromJson(serverMessage, Message.class);
-
-            switch (message.getCommand()) {
-                case SEND_MESSAGE -> {
-                    MessagePrinter.println(ConsoleColors.BLUE,message.getSender() + ": " + message.getContent());
-                }
-                case USERS -> {
-                    List<String> list = new Gson().fromJson(message.getContent(), ArrayList.class);
-                    MessagePrinter.println(ConsoleColors.BLUE,"------------------Usuários------------------");
-                    list.forEach(s -> MessagePrinter.println(ConsoleColors.BLUE, s));
-                    MessagePrinter.println(ConsoleColors.BLUE,"--------------------------------------------");
-                }
-                case EXIT -> {
-                    MessagePrinter.println(ConsoleColors.RED,message.getSender() + " se desconectou!");
-                }
-                case BANNED -> {
-                    MessagePrinter.println(ConsoleColors.RED,"Você foi banido!");
-                    this.closeConnection();
-                }
-            }
-        }
+        return new BufferedReader(inputReader);
     }
 
     public void closeConnection() throws IOException {
