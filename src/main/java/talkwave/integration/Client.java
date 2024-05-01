@@ -10,13 +10,14 @@ public class Client {
 
     PrintStream printStream;
     Socket socket;
-    String userId;
-    String host;
-    Integer port;
+    final String userId;
+    final String host;
+    final Integer port;
 
     public String getUserId() {
         return userId;
     }
+
     public Client(String userId, String host, Integer port) throws IOException {
         this.userId = userId;
         this.host = host;
