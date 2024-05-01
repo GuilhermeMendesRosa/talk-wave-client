@@ -2,7 +2,7 @@ package talkwave.ui;
 
 import java.util.Scanner;
 
-public class SystemScanner {
+public class EnhancedScanner {
 
     public static String get(String label) {
         if (label != null) {

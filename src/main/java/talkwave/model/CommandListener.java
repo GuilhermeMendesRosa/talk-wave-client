@@ -5,7 +5,7 @@ import talkwave.integration.dto.MessageDTO;
 import talkwave.integration.MessageBuilder;
 import talkwave.ui.ConsoleColors;
 import talkwave.ui.MessagePrinter;
-import talkwave.ui.SystemScanner;
+import talkwave.ui.EnhancedScanner;
 
 public class CommandListener {
 
@@ -18,7 +18,7 @@ public class CommandListener {
     public void start() {
         while (true) {
             try {
-                String commandLine = SystemScanner.get();
+                String commandLine = EnhancedScanner.get();
                 MessageDTO message = new MessageBuilder(client.getUserId(), commandLine).build();
                 client.send(message);
             } catch (InvalidCommandException invalidCommandException) {

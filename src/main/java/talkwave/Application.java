@@ -5,7 +5,7 @@ import talkwave.integration.ReceiveMessageRunnable;
 import talkwave.model.*;
 import talkwave.ui.ConsoleColors;
 import talkwave.ui.MessagePrinter;
-import talkwave.ui.SystemScanner;
+import talkwave.ui.EnhancedScanner;
 
 import java.io.IOException;
 
@@ -35,12 +35,12 @@ public class Application {
 
     private static String getUserId() {
         boolean isValidUsername = false;
-        String username = SystemScanner.get("Informe o nome do usuário: ");
+        String username = EnhancedScanner.get("Informe o nome do usuário: ");
         do {
             isValidUsername = StringValidator.isNotBlank(username);
             if (!isValidUsername) {
                 MessagePrinter.println(ConsoleColors.RED,"Usuário inválido, tente novamente.");
-                username = SystemScanner.get("Informe o nome do usuário: ");
+                username = EnhancedScanner.get("Informe o nome do usuário: ");
             }
         } while (!isValidUsername);
 
