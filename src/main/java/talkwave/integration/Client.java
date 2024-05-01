@@ -7,10 +7,7 @@ import talkwave.model.MessagePrinter;
 
 import java.io.*;
 import java.net.Socket;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 
 public class Client {
 
@@ -70,24 +67,44 @@ public class Client {
     }
 
     public void sendFile(String commandLine) {
+        commandLine = commandLine.replace(CommandType.SEND_FILE.getCommandWithPrefix(), "").trim();
+        String recipient = commandLine.split(" ")[0];
+        Message message = new Message(userId, Collections.singletonList(recipient), CommandType.SEND_FILE);
+        String filePath = commandLine.split(" ")[1];
+
+        FileInputStream fileInputStream = null;
+        BufferedInputStream bufferedInputStream = null;
+        DataOutputStream dataOutputStream = null;
         try {
-            String filePath = commandLine.replace(CommandType.SEND_FILE.getCommandWithPrefix(), "").trim();
+            // Ler os bytes do arquivo e codificá-los como Base64
+            fileInputStream = new FileInputStream(filePath);
+            byte[] bytes = new byte[(int) new File(filePath).length()];
+            fileInputStream.read(bytes);
+            String base64Encoded = Base64.getEncoder().encodeToString(bytes);
 
-            File file = new File(filePath);
-            byte[] bytes = new byte[(int) file.length()];
+            // Construir o objeto JSON com os bytes codificados
+            message.setContent(base64Encoded);
 
-            BufferedInputStream bufferedInputStream = new BufferedInputStream(
-                    new FileInputStream(file)
-            );
+            // Obter o fluxo de saída do socket para enviar os dados
+            dataOutputStream = new DataOutputStream(socket.getOutputStream());
 
-            int readContent;
-            while ((readContent = bufferedInputStream.read(bytes)) != -1) {
-                this.printStream.write(bytes, 0, readContent);
-            }
+            // Enviar o JSON
+            String json = new Gson().toJson(message);
+            this.printStream.println(json);
 
-            this.printStream.flush();
+            System.out.println("JSON enviado com sucesso.");
         } catch (IOException e) {
             MessagePrinter.println(ConsoleColors.RED, "Erro ao enviar arquivo");
+        } finally {
+            try {
+                // Fechar os fluxos e o socket
+                if (fileInputStream != null) fileInputStream.close();
+                if (bufferedInputStream != null) bufferedInputStream.close();
+                if (dataOutputStream != null) dataOutputStream.close();
+                if (socket != null) socket.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
     }
 
