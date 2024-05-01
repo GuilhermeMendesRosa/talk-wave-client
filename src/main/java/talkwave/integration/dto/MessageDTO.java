@@ -62,4 +62,12 @@ public class MessageDTO {
     public void setCommand(CommandType command) {
         this.command = command;
     }
+
+    public FileDTO getFile() {
+        return file;
+    }
+
+    public void setFile(FileDTO file) {
+        this.file = file;
+    }
 }

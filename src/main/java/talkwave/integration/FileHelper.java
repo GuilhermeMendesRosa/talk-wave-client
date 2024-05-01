@@ -28,4 +28,8 @@ public class FileHelper {
 
         return null;
     }
+
+    public static byte[] decodeFromBase64(String base64) {
+        return Base64.getDecoder().decode(base64);
+    }
 }
