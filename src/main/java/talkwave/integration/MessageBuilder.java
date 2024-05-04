@@ -47,9 +47,10 @@ public class MessageBuilder {
     }
 
     private String getArgument(int index) {
+        final int maxArgs = 2;
         String messageArgs = commandLine
                 .replace(commandType.getCommandWithPrefix() + " ", "");
-        return messageArgs.split(" ")[index];
+        return messageArgs.split(" ", maxArgs)[index];
     }
 
     private List<String> getRecipientList() {
