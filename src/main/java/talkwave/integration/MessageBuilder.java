@@ -49,7 +49,7 @@ public class MessageBuilder {
     private String getArgument(int index) {
         String messageArgs = commandLine
                 .replace(commandType.getCommandWithPrefix() + " ", "");
-        return messageArgs.split(" ")[index];
+        return messageArgs.split(" ", 2)[index + 1];
     }
 
     private List<String> getRecipientList() {
