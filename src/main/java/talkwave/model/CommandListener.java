@@ -22,7 +22,7 @@ public class CommandListener {
             try {
                 String commandLine = EnhancedScanner.get();
                 MessageDTO message = new MessageBuilder(client.getUserId(), commandLine).build();
-                client.send(message);
+                if (message != null) client.send(message);
             } catch (InvalidCommandException invalidCommandException) {
                 onInvalidCommand();
             } catch (Exception e) {
